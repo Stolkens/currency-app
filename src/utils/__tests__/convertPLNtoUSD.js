@@ -12,6 +12,16 @@ describe('ConvertPLNtoUSD', () => {
     expect(convertPLNToUSD('abc')).toBeNaN();
     expect(convertPLNToUSD('-101')).toBeNaN();
     expect(convertPLNToUSD('-10ddf3')).toBeNaN();
+    expect(convertPLNToUSD('')).toBeNaN();
+  })
+  it('should return NaN when input is empty', () => {
+    expect(convertPLNToUSD()).toBeNaN();
+  })
+  it('should return error for non string or number', () => {
+    expect(convertPLNToUSD({})).toBe('Error');
+    expect(convertPLNToUSD([])).toBe('Error');
+    expect(convertPLNToUSD(null)).toBe('Error');
+    expect(convertPLNToUSD(function() {})).toBe('Error');
   })
 });
 

@@ -23,5 +23,11 @@ describe('ConvertPLNtoUSD', () => {
     expect(convertPLNToUSD(null)).toBe('Error');
     expect(convertPLNToUSD(function() {})).toBe('Error');
   })
+  it('should return zero for number less tahn zero', () => {
+    expect(convertPLNToUSD(-5)).toBe('$0.00');
+    expect(convertPLNToUSD(-45)).toBe('$0.00');
+    expect(convertPLNToUSD(-556.5)).toBe('$0.00');
+    expect(convertPLNToUSD(-0.4)).toBe('$0.00');
+});
 });
 

@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import CurrencyForm from './CurrencyForm';
 import userEvent from '@testing-library/user-event';
 import { cleanup } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 describe('Component CurrencyForm', () => {
   it('should render without crashing', () => {
@@ -19,28 +20,27 @@ describe('Component CurrencyForm', () => {
  
   for (const testCase of testCases) {
 
-      it('should run action callback with proper data on form submit', () => {
+      it('should run action callback with proper data on form submit', async () => {
       const action = jest.fn();
 
       // render component
       render(<CurrencyForm action={action} />);
-
+      
       // find “convert” button
       const submitButton = screen.getByText('Convert');
-
       // find fields element
-
       const amountField = screen.getByTestId('amount');
       const fromField = screen.getByTestId('from');
       const toField = screen.getByTestId('to');
 
       // set test values to fields
-      userEvent.type(amountField, testCase.amount);
-      userEvent.selectOptions(fromField, testCase.from);
-      userEvent.selectOptions(toField, testCase.to);
+      await userEvent.type(amountField, testCase.amount);
+      await userEvent.selectOptions(fromField, testCase.from);
+      await userEvent.selectOptions(toField, testCase.to);
 
       // simulate user click on "convert" button
-      userEvent.click(submitButton);
+      
+      await userEvent.click(submitButton);
 
       // check if action callback was called once and with proper argument
       expect(action).toHaveBeenCalledTimes(1);
